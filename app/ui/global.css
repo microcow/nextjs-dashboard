@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/*이 부분은 Tailwind CSS의 핵심 파일들을 불러오는 코드입니다.*/
+/* Tailwind는 TSX 마크업에서 유틸리티 클래스를 직접 빠르게 작성할 수 있도록 하여 개발 프로세스의 속도를 높이는 CSS 프레임워크입니다. */
+/* Tailwind에서는 클래스 이름을 추가하여 요소를 스타일화합니다. 예를 들어, 클래스 "text-blue-500"을 추가하면 <h1> 텍스트가 파란색으로 바뀝니다:
+ <h1 className="text-blue-500">I'm blue!</h1> */
+ /* CSS 스타일은 전역적으로 공유되지만, 각 클래스는 각 요소에 개별적으로 적용됩니다. 즉, 요소를 추가하거나 삭제하더라도 별도의 스타일시트 유지 관리,
+  스타일 충돌 또는 애플리케이션이 확장됨에 따라 증가하는 CSS 번들 크기에 대해 걱정할 필요가 없습니다.*/
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button { /* Webkit 기반 브라우저(예: Chrome, Safari)에서 스핀 버튼을 제거 */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number']::-webkit-outer-spin-button { /* Webkit 기반 브라우저(예: Chrome, Safari)에서 스핀 버튼을 제거 */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* 해당 CSS 코드의 목적은 <input type="number"> 요소의 기본 스타일을 제거하여 브라우저 간 일관된 외관을 제공하는 것입니다. */
