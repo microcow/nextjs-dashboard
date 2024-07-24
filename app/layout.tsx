@@ -16,5 +16,5 @@ export default function RootLayout({
        {/* antialiased는 CSS 클래스 또는 Tailwind CSS 유틸리티 클래스입니다.
        이 클래스는 텍스트의 계단 현상을 줄여서 더 부드럽고 깔끔하게 보이도록 텍스트를 렌더링합니다. */}
     </html>
-  );
+  ); // test
 }
