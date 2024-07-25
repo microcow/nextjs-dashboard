@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from '@vercel/postgres'; // 이 함수를 사용하면 데이터베이스를 쿼리할 수 있습니다.
 import {
   CustomerField,
   CustomersTableType,
@@ -17,11 +17,14 @@ export async function fetchRevenue() {
     // console.log('Fetching revenue data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    const data = await sql<Revenue>`SELECT * FROM revenue`; 
+    /* TypeScript에서는 제네릭을 사용하여 함수나 메서드의 반환 타입을 지정할 수 있습니다. 이 경우, sql<Revenue> 부분이 sql 함수의 반환 타입을 Revenue로 지정하는 역할을 합니다.
+       따라서, 반환되는 타입은 Revenue[] (배열) 타입입니다.*/
+       // const 변수의 타입은 선언 시점에 명시적으로 지정되지 않으면, 변수에 할당된 값에 따라 동적으로 결정된다 (즉, java와 달리 String data[]; 이렇게 배열로 선언하지 않더라도 주입되는 값에 따라 동적으로 결정)
 
     // console.log('Data fetch completed after 3 seconds.');
 
-    return data.rows;
+    return data.rows; // .rows는 쿼리 결과의 행(객체, 데이터)들을 배열로 포함
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
@@ -50,9 +53,7 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
+    // 여러 개의 비동기 SQL 쿼리를 정의.
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
@@ -60,13 +61,15 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
+    // 모든 비동기 쿼리를 병렬로 실행
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
       invoiceStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    
+    const numberOfInvoices = Number(data[0].rows[0].count ?? '0'); // data[0]: data의 첫번째 요소(invoiceCountPromise) // rows[0].count : 쿼리 결과에서 총 인보이스 수 // ?? '0' : count가 null 또는 undefined일 경우 '0'을 기본값으로 설정
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
