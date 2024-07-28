@@ -12,7 +12,7 @@ export default async function Page() {
     numberOfCustomers,
     totalPaidInvoices,
     totalPendingInvoices,
-  } = await fetchCardData();
+  } = await fetchCardData(); // fetchLatestInvoices() 가져오기가 완료될 때까지 기다립니다
    return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>

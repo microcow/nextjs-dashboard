@@ -14,15 +14,15 @@ export async function fetchRevenue() {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`; 
     /* TypeScript에서는 제네릭을 사용하여 함수나 메서드의 반환 타입을 지정할 수 있습니다. 이 경우, sql<Revenue> 부분이 sql 함수의 반환 타입을 Revenue로 지정하는 역할을 합니다.
        따라서, 반환되는 타입은 Revenue[] (배열) 타입입니다.*/
        // const 변수의 타입은 선언 시점에 명시적으로 지정되지 않으면, 변수에 할당된 값에 따라 동적으로 결정된다 (즉, java와 달리 String data[]; 이렇게 배열로 선언하지 않더라도 주입되는 값에 따라 동적으로 결정)
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.');
 
     return data.rows; // .rows는 쿼리 결과의 행(객체, 데이터)들을 배열로 포함
   } catch (error) {
@@ -61,7 +61,7 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
-    // 모든 비동기 쿼리를 병렬로 실행
+    // 모든 비동기 쿼리를 병렬(=Promise.all)로 동시에 실행 // 단, 순서대로 정보를 처리해야할땐 사용x
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
