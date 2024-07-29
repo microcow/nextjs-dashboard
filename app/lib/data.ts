@@ -15,7 +15,7 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`; 
     /* TypeScript에서는 제네릭을 사용하여 함수나 메서드의 반환 타입을 지정할 수 있습니다. 이 경우, sql<Revenue> 부분이 sql 함수의 반환 타입을 Revenue로 지정하는 역할을 합니다.
@@ -33,6 +33,7 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
+    
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
