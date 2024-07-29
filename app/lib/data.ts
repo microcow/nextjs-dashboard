@@ -69,7 +69,7 @@ export async function fetchCardData() {
     ]);
 
     
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0'); // data[0]: data의 첫번째 요소(invoiceCountPromise) // rows[0].count : 쿼리 결과에서 총 인보이스 수 // ?? '0' : count가 null 또는 undefined일 경우 '0'을 기본값으로 설정
+    const numberOfInvoices = Number(data[0].rows[0].count ?? '0'); // data[0]: data의 첫번째 요소(invoiceCountPromise) // rows[0].count : 쿼리 결과에서 총 인보이스 수 // ?? '0' : Number함수에 의해 count가 null 또는 undefined일 경우 '0'을 기본값으로 설정
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');

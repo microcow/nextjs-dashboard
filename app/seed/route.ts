@@ -47,7 +47,7 @@
        (invoice) => client.sql`
          INSERT INTO invoices (customer_id, amount, status, date)
          VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
-         ON CONFLICT (id) DO NOTHING;
+         ON CONFLICT (customer_id) DO NOTHING;
        `,
      ),
    );
