@@ -7,11 +7,14 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
+import { createInvoice } from '@/app/lib/actions';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   return (
-    <form>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+    <form action={createInvoice}> 
+    {/* Next.js action은 form 제출(이용자가 sumit 버튼 클릭) 시 함수(createInvoice)가 실행되며,
+    Next.js는 서버 측에서 이 데이터를 자동으로 파싱하여 FormData 객체로 전달합니다. (단, 호출받는 함수가 'use server'  지시어를 사용하는 경우에만 FormData타입으로 전달됨) */}
+          <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">

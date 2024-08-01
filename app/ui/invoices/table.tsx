@@ -19,7 +19,7 @@ export default async function InvoicesTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            {invoices?.map((invoice) => (
+            {invoices?.map((invoice) => ( // invoices 배열을 반복(iterate)하여invoice 변수(파라미터)에 저장하여 아래 코드 실행
               <div
                 key={invoice.id}
                 className="mb-2 w-full rounded-md bg-white p-4"

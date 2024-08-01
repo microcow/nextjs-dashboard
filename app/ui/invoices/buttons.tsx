@@ -1,7 +1,7 @@
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export function CreateInvoice() {
+export function CreateInvoice() { // 송장 생성(새로) 버튼
   return (
     <Link
       href="/dashboard/invoices/create"
@@ -13,10 +13,10 @@ export function CreateInvoice() {
   );
 }
 
-export function UpdateInvoice({ id }: { id: string }) {
+export function UpdateInvoice({ id }: { id: string }) { // 송장 수정 버튼
   return (
     <Link
-      href="/dashboard/invoices"
+      href={`/dashboard/invoices/${id}/edit`} // 이런 식으로 값을 보내면, 해당 페이지에서 ${id} 값을 사용할 수 있음
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
