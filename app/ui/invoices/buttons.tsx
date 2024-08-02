@@ -1,3 +1,4 @@
+import { deleteInvoice } from '@/app/lib/actions';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -25,12 +26,15 @@ export function UpdateInvoice({ id }: { id: string }) { // 송장 수정 버튼
 }
 
 export function DeleteInvoice({ id }: { id: string }) {
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
   return (
     <>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
-      </button>
+     <form action={deleteInvoiceWithId}>
+        <button className="rounded-md border p-2 hover:bg-gray-100">
+          <span className="sr-only">Delete</span>
+          <TrashIcon className="w-5" />
+        </button>
+      </form> {/* button의 기본타입은 subit이므로 버튼을 누르는 것만으로고 form이 제출되고 action이 실행됨 */}
     </>
   );
 }
