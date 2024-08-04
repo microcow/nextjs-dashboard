@@ -32,7 +32,7 @@ export default function Search({ placeholder }: { placeholder: string }) { //pla
 
   return (
     <div className="relative flex flex-1 flex-shrink-0">
-      <label htmlFor="search" className="sr-only">
+      <label htmlFor="search" className="sr-only"> {/* htmlFor 속성은 HTML <label> 요소에서 사용되며, 이 속성은 특정 <input> 요소와 연결하기 위해 사용됩니다. 이 속성이 지정된 값은 연결될 <input> 요소의 id 속성과 일치해야 합니다. 이렇게 하면 사용자가 <label>을 클릭할 때 해당 <input> 요소가 포커스를 받게 됩니다. */}
         Search
       </label>
       <input

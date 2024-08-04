@@ -42,7 +42,7 @@ export default function EditInvoiceForm({
               id="customer"
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={invoice.customer_id}//선택된 이용자가 있을경우(수정 시) Select a customer 말고 customer_id가 노출되도록
+              defaultValue={invoice.customer_id}//선택된 이용자가 있을경우(수정 시) Select a customer 문구 말고 customer_id가 노출되도록
             >
               <option value="" disabled>
                 Select a customer

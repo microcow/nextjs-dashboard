@@ -1,3 +1,5 @@
+'use client';
+
 import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -7,13 +9,22 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { createInvoice } from '@/app/lib/actions';
+import { createInvoice, State } from '@/app/lib/actions';
+import { useActionState } from 'react';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  const initialState: State = { message: null, errors: {} };
+  // initialState라는 변수를 선언하고, 이 변수의 타입을 State로 지정
+  //= { message: null, errors: {} }: initialState 변수의 값을 { message: null, errors: {} }로 초기화합니다. 즉, message는 null이고, errors는 빈 객체입니다.
+  
+  const [state, formAction] = useActionState(createInvoice, initialState);
+  // 여기서 state는 현재 상태를 나타내며, formAction은 폼이 제출될 때 호출되는 함수이다
+  // useActionState 훅은 [state, formAction] 값을 반환합니다 (구조 분해 할당을 사용하여 useActionState 훅의 반환 값을 state와 formAction이라는 두 개의 변수에 할당)
+
   return (
-    <form action={createInvoice}> 
-    {/* Next.js action은 form 제출(이용자가 sumit 버튼 클릭) 시 함수(createInvoice)가 실행되며,
-    Next.js는 서버 측에서 이 데이터를 자동으로 파싱하여 FormData 객체로 전달합니다. (단, 호출받는 함수가 'use server'  지시어를 사용하는 경우에만 FormData타입으로 전달됨) */}
+    <form action={formAction}> 
+    {/* Next.js action은 form 제출(이용자가 sumit 버튼 클릭) 시 함수(formAction)가 실행되며,
+    Next.js는 서버 측에서 이 데이터를 자동으로 파싱하여 FormData 객체로 전달합니다. (단, 호출받는 함수가 'use server' 지시어를 사용하는 경우에만 FormData타입으로 전달됨) */}
           <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -26,6 +37,9 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
+              aria-describedby="customer-error" 
+              // aria-describedby는 그냥 시각장애인 등을 돕기위한 스크린 리더일 뿐 해당 코드가 없어라도 동작에 문제x
+              // id="customer-error"가 실행되면 오류메시지를 읽어줌
             >
               <option value="" disabled>
                 Select a customer
@@ -38,6 +52,17 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+          <div id="customer-error" aria-live="polite" aria-atomic="true"> {/* (서버 측 데이터 검증 방법) */}
+            {/* 해당 부분은 state.errors객체가 없다면(오류가 발생하지 않는다면) 실행되지 않음 */}
+            {/* id="customer-error" : 이 id 속성은 select 입력의 오류 메시지를 담고 있는 HTML 요소를 고유하게 식별합니다. aria-describedby가 관계를 설정하기 위해 필요 */}
+            {/* aria-live="polite" : 스크린 리더가 콘텐츠 변경 사항을 사용자에게 알리는 방식을 제어합니다. "polite" 값은 사용자에게 방해되지 않도록 유휴 상태일 때 변경 사항을 알려준다 */}
+        {state.errors?.customerId &&
+          state.errors.customerId.map((error: string) => (
+            <p className="mt-2 text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
+      </div>
         </div>
 
         {/* Invoice Amount */}
@@ -54,6 +79,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 step="0.01"
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                // required // required 속성은 HTML 폼 요소에서 사용되며, 사용자가 해당 입력 필드를 비워두지 못하도록 하는 데 사용됩니다.(클라이언트 측 검증방법)
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
