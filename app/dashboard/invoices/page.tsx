@@ -6,7 +6,12 @@ import { lusitana } from '@/app/ui/fonts';
 import { Suspense } from 'react';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { fetchInvoicesPages } from '@/app/lib/data';
+import { Metadata } from 'next';
  
+export const metadata: Metadata = {
+  title: 'Invoices',
+};
+
 // URL의 쿼리 파라미터가 변경되면, Next.js는 해당 페이지를 다시 렌더링합니다.
 export default async function Page({ 
   searchParams, // Next.js의 Page 컴포넌트가 렌더링될 때, 페이지의 URL에서 쿼리,page 문자열을 자동으로 파싱하여 파라미터로 받아온다.

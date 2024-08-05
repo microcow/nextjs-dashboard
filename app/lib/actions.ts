@@ -4,6 +4,27 @@ import { z } from 'zod'; // Zod는 입력 데이터의 타입을 검사하고, �
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; 
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData); ////
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
 
 const FormSchema = z.object({ // FormSchema 스키마 생성
     id: z.string(), // id는 문자열(string) 타입이여야함
