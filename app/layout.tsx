@@ -23,9 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>  
-      {/* <html>과 <body> 태그를 설정하며, children을 <body>에 렌더링합니다.
-       즉, 모든 페이지 컴포넌트는 이 레이아웃의 children으로 전달되어 렌더링됩니다. */}
+      <body className={`${inter.className} antialiased`}>{children}</body> 
+      {/* (★ next.js를 관통하는 이론 ★)
+      <html>과 <body> 태그를 설정하며, children을 <body>에 렌더링합니다.
+      즉, 모든 Page.tsx 세그먼트는 이 레이아웃의 children으로 전달되어 렌더링됩니다.(RootLayout이기 때문) 
+
+      ★★ 예를들어, app/dashboard/invoice/Layout.tsx가 있다고 치면, app/dashboard/invoice/Layout.tsx보다 하위(상속받는)에 있는 page.tsx(예를들어 app/dashboard/invoice/create/page.tsx) 세그먼트는 app/dashboard/invoice/Layout.tsx에 children을 전달함
+      그러나, app/dashboard/invoice.Layout.tsx보다 상위(예를들어 app/dashboard/page.tsx)에 있으면 해당 page.tsx는 app/dashboard/invoice.Layout.tsx에 children을 전달하지 않고 상위 Layout.tsx에만 children을 전달함
+      또한, 보다 하위 Layout.tsx에는 children값을 넘겨주지 않지만 보다 상위 Layout.tsx에는 children 값을 넘겨줌 */}
+
        {/* antialiased는 CSS 클래스 또는 Tailwind CSS 유틸리티 클래스입니다.
        이 클래스는 텍스트의 계단 현상을 줄여서 더 부드럽고 깔끔하게 보이도록 텍스트를 렌더링합니다. */}
     </html>
