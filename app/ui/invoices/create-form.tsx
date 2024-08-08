@@ -20,6 +20,8 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
   const [state, formAction] = useActionState(createInvoice, initialState);
   // 여기서 state는 현재 상태를 나타내며, formAction은 폼이 제출될 때 호출되는 함수이다
   // useActionState 훅은 [state, formAction] 값을 반환합니다 (구조 분해 할당을 사용하여 useActionState 훅의 반환 값을 state와 formAction이라는 두 개의 변수에 할당)
+  /* ★ state에는 createInvoice 함수의 prevState 값이 오게 되지만, createInvoice 함수에서 직접적으로 prevState 객체를 반환하고 있지 않고 필요에 따라 prevState 객체의 하위 객체만 단독으로(ex. errors) 전달하고 있음
+     어쨌든 하위 객체인 errors를 사용하려면 state.errors 이런 식으로 사용해야함  */
 
   return (
     <form action={formAction}> 

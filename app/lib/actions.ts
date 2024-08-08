@@ -71,8 +71,11 @@ const FormSchema = z.object({ // FormSchema 스키마 생성
     console.log(validatedFields);
     return {
       errors: validatedFields.error.flatten().fieldErrors, // 검증 오류를 포함하는 객체로, 각 필드별 오류 메시지를 포함합니다.
-      // 만약, customerId가 String타입이 아닐 경우 위에서 설정한 invalid_type_error에 따라 errors 객체에는 'Please select a customer.' 문자열이 담긴 후 return됨
-      // return된 오류 객체는 useActionState훅의 state에 저장되며, state.errors로 사용가능하다.
+      // errors는 createInvoice 함수가 받고있는 prevState 인수의 하위 객체임. prevState객체를 return하는게 아닌 errors 등 prevState객체의 하위 객체만 단독으로 return 가능
+
+      // errors 객체는 errors.id 혹은 errors.amount 처럼 각 필드에 대한 오류 메시지를 포함하는 하위 객체를 가지게 된다. 
+      // 만약, customerId가 String타입이 아닐 경우 위에서 설정한 invalid_type_error에 따라 errors.customerId에는 'Please select a customer.' 문자열이 담긴 후 return됨
+      // return된 오류 객체는 useActionState훅의 state에 저장되며(create-form.tsx의 state객체를 말함), ' state.errors.세부객체명' 으로 사용가능하다.
       // return 문이 실행되면 그 아래의 코드는 실행되지 않고 즉시 함수가 종료
       message: 'Missing Fields. Failed to Create Invoice.', // 사용자에게 검증 실패를 알리는 메시지
     };
